@@ -70,6 +70,11 @@ defmodule Mix.Tasks.Phoenix.Createmvc do
       # If there is a new db adapter, add it to if condition
       if config[:deps][:ecto] !== nil do
         create_file "web/models/#{name}.ex", model_template(assigns)
+      else
+        IO.puts """
+        Depencency ecto is not in your mix.exs file, you shoud add it into deps in you mix.exs file,
+        and re-run `mix phoenix.createmvc name`
+        """
       end
       create_file "web/views/#{name}_view.ex", view_template(assigns)
       create_file "web/controllers/#{name}_controller.ex", controller_template(assigns)
@@ -83,9 +88,11 @@ defmodule Mix.Tasks.Phoenix.Createmvc do
       # Copy semantic ui files
       source = Path.join(application_path, "/deps/phoenix_createmvc/priv/static/ui")
       destination = Path.join(application_path, "/priv/static/ui")
-      File.cp_r!(source, destination, fn(_, destination) ->
-        IO.puts "copying file to #{destination}"
-      end)
+      if File.dir?(destination) === false do
+        File.cp_r!(source, destination, fn(_, destination) ->
+          IO.puts "copying file to #{destination}"
+        end)
+      end
     else
       Mix.raise """
       #{phoenix_web_path} folder does not exists.
