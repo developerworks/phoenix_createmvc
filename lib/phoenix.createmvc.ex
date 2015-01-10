@@ -83,7 +83,7 @@ defmodule Mix.Tasks.Phoenix.Createmvc do
       else
         IO.puts """
 
-        Depencency ecto is not in your mix.exs file, you shoud add it into deps in you mix.exs file,
+        Depencency ecto is not in your mix.exs file, you shoud add it into deps in your mix.exs file,
         and re-run `mix phoenix.createmvc name`
         """
       end

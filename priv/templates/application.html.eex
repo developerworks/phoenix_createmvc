@@ -7,14 +7,23 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Hello Phoenix!</title>
-  <link rel="stylesheet" href="/css/phoenix.css">
-  <link rel="stylesheet" href="/ui/semantic.min.css"/>
-  <script type="text/javascript" src="/ui/semantic.min.js"></script>
+  <link rel="stylesheet" href="/googlefonts/fonts.css"/>
+  <link rel="stylesheet" href="/ui/semantic.css"/>
 </head>
 <body>
 <div class="container">
   <%= @inner %>
 </div>
 <!-- /container -->
+<script>
+  (function () {
+    var eventSupport = ('querySelector' in document && 'addEventListener' in window)
+    jsonSupport = (typeof JSON !== 'undefined'),
+      jQuery = (eventSupport && jsonSupport)? '/ui/jquery.min.js': '/ui/jquery.legacy.min.js'
+    ;
+    document.write('<script src="' + jQuery + '"><\/script>');
+  }());
+</script>
+<script type="text/javascript" src="/ui/semantic.min.js"></script>
 </body>
 </html>
