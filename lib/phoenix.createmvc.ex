@@ -42,7 +42,7 @@ defmodule Mix.Tasks.Phoenix.Createmvc do
     Mix.raise """
     phoenix.create expects controller name
 
-        mix phenix.create controller_name
+        mix phenix.createmvc controller_name
     """
   end
 
