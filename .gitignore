@@ -1,0 +1,7 @@
+/_resources
+/_build
+/deps
+lib/phoenix.updatestatic.ex
+erl_crash.dump
+*.ez
+.idea/
