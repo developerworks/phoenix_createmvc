@@ -48,6 +48,16 @@ defmodule Mix.Tasks.Phoenix.Createmvc do
 
 
   defp do_generate(params) do
+
+    if File.exists?(Path.join(application_path,".editorconfig")) === false do
+      create_file ".editorconfig", editorconfig_text
+      IO.puts """
+
+      It seems like not `.editorconfig` exists in you project root directory, created for you.
+      If the `.editorconfig` default configuration is not suitable for you, you can overwrite it in child directory
+      """
+    end
+
     phoenix_web_path = Path.join(application_path, "/web")
     semanticui_path  = Path.join(application_path, "/priv/static/semanticui")
     assigns = [
@@ -72,6 +82,7 @@ defmodule Mix.Tasks.Phoenix.Createmvc do
         create_file "web/models/#{name}.ex", model_template(assigns)
       else
         IO.puts """
+
         Depencency ecto is not in your mix.exs file, you shoud add it into deps in you mix.exs file,
         and re-run `mix phoenix.createmvc name`
         """
@@ -88,11 +99,29 @@ defmodule Mix.Tasks.Phoenix.Createmvc do
       # Copy semantic ui files
       source = Path.join(application_path, "/deps/phoenix_createmvc/priv/static/ui")
       destination = Path.join(application_path, "/priv/static/ui")
+
       if File.dir?(destination) === false do
         File.cp_r!(source, destination, fn(_, destination) ->
           IO.puts "copying file to #{destination}"
         end)
       end
+
+      # Copy google fonts to local file system for china
+      fonts_source = Path.join(application_path, "/deps/phoenix_createmvc/priv/static/googlefonts")
+      fonts_destination = Path.join(application_path, "/priv/static/googlefonts")
+
+      if File.dir?(fonts_destination) === false do
+        File.cp_r!(fonts_source, fonts_destination, fn(_, destination) ->
+          IO.puts "copying file to #{destination}"
+        end)
+      end
+
+
+
+      # Copy layout
+      #layout_source = Path.join(application_path, "/deps/phoenix_createmvc/priv/templates/application.html.eex")
+      #layout_destination = Path.join(application_path, "/web/templates/layout/application.html.eex")
+
     else
       Mix.raise """
       #{phoenix_web_path} folder does not exists.
@@ -112,6 +141,28 @@ defmodule Mix.Tasks.Phoenix.Createmvc do
   #  {:ok, binary} = File.read(Path.join(application_path, "/deps/phoenix_createmvc/templates/#{name}.html.eex"))
   #  binary
   #end
+
+  embed_text :editorconfig, """
+  root = true
+  [*]
+  indent_style = space
+  indent_size = 2
+  end_of_line = lf
+  charset = utf-8
+  trim_trailing_whitespace = true
+  insert_final_newline = true
+
+  [*.md]
+  trim_trailing_whitespace = false
+
+  [*.eex]
+  indent_style = space
+  indent_size = 2
+
+  [*.ex]
+  indent_style = space
+  indent_size = 2
+  """
 
   # embed_template is a macro, could not pass runtime function `t/1`
   embed_template :action_index, """
