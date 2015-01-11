@@ -92,9 +92,9 @@ defmodule Mix.Tasks.Phoenix.Createmvc do
       # Create templates for controller actions
       create_directory "web/templates/#{name}"
       create_file "web/templates/#{name}/index.html.eex", action_index_template(assigns)
-      create_file "web/templates/#{name}/create.html.eex", action_index_template(assigns)
-      create_file "web/templates/#{name}/edit.html.eex", action_index_template(assigns)
-      create_file "web/templates/#{name}/show.html.eex", action_index_template(assigns)
+      create_file "web/templates/#{name}/create.html.eex", action_create_template(assigns)
+      create_file "web/templates/#{name}/edit.html.eex", action_edit_template(assigns)
+      create_file "web/templates/#{name}/show.html.eex", action_show_template(assigns)
 
       # Copy semantic ui files
       source = Path.join(application_path, "/deps/phoenix_createmvc/priv/static/ui")
