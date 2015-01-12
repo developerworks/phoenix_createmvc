@@ -7,6 +7,7 @@ Phoenix MVCT Generator is a task that is used to generate files for your model/v
 ![mix phoenix.createmvc](http://developerworks.github.io/assets/elixir/F8AB6ADD-C247-4B96-B0C6-B7FE92FFF3E3.png)
 
 1. Add `phoenix_createmvc` to deps 
+
     ```
     defp deps do
       [
